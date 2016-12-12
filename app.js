@@ -1,6 +1,9 @@
 // import express from 'express'
-import { config } from 'dotenv'
-config()
+// import { config } from 'dotenv'
+// config()
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 import express from 'express'
 import request from 'request'
@@ -9,7 +12,8 @@ import products from './products/index'
 import reqProd from './requestProducts'
 
 // TODO: Fix this later
-const APIKEY = process.env.APIKEY || '4cfe177055e6865a944b57a445e1a8b7a38c4479'
+const APIKEY = process.env.APIKEY
+// console.log(APIKEY)
 const app = express()
 
 const categories = [
@@ -57,6 +61,6 @@ app.get('/items', (req,res) =>{
 //     })
 // })
 
-app.listen(8000, ()=>{
+app.listen(8000, () => {
   console.log('running server on port 8000')
 })
