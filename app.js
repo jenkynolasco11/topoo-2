@@ -20,7 +20,6 @@ let allItems = []
 let promises = products.requestAllItems()
 
 Promise.all(promises).then((products)=>{
-
   allItems = [].concat(products)
   // products.forEach((data) => {
   //   allItems = Object.assign({}, allItems, data)
@@ -43,9 +42,13 @@ app.get('/', (req,res) => {
   res.render('/static/index')
 })
 
+// app.get('/items/:cat/:offset', (req,res)=>{
+  
+// })
+
 app.get('/items', (req,res) =>{
   console.log('requesting items...')
-  console.log(allItems.length)
+  // console.log(allItems.length)
   res.end(JSON.stringify(allItems))
 })
 
