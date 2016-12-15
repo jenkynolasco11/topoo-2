@@ -100,7 +100,6 @@
 	    key: 'render',
 	    value: function render() {
 	      var renderCategories = function renderCategories(cat) {
-	        // console.log(cat)
 	        return _react2.default.createElement(_ProductsCategory2.default, { data: cat, key: cat.cat });
 	      };
 
@@ -109,40 +108,22 @@
 	        null,
 	        this.state.categories.map(renderCategories)
 	      );
-	      // get('/items')
-	      // .then( (response) => {
-	      //   console.log(response.data)
-	      //   // this.setState({
-	      //   //
-	      //   // })
-	      // })
-	      // console.log('here I am...')
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      (0, _axios.get)('/items').then(function (response) {
-	        // console.log(response.data)
+	      (0, _axios.get)('/items').then(function (res) {
 	        _this2.setState({
-	          categories: response.data.pop()
+	          categories: [].concat(res.data)
 	        });
-	        // console.log('it\'s here')
-	        // console.log(this.state)
 	      });
 	    }
 	  }]);
 
 	  return Products;
 	}(_react.Component);
-
-	// Renders component in DOM
-	// render(
-	//   createElement(Products),
-	//   document.getElementById('products-container')
-	// )
-
 
 	_reactDom2.default.render(_react2.default.createElement(Products), document.getElementById('products-container'));
 
@@ -4208,7 +4189,7 @@
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -4236,39 +4217,37 @@
 	  function Item(props) {
 	    _classCallCheck(this, Item);
 
+	    return _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	    // console.log(props)
-	    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
-
-	    console.log('it\'s in Item');
+	    // console.log('it\'s in Item')
 	    // this.state = {}
-	    return _this;
 	  }
 
 	  _createClass(Item, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
-	      console.log(this.props.data);
+	      // console.log(this.props.data)
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'item' },
+	        "div",
+	        { className: "item" },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'sku' },
+	          "div",
+	          { className: "sku" },
 	          this.props.data.sku
 	        ),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'price' },
+	          "div",
+	          { className: "price" },
 	          this.props.data.price
 	        ),
 	        _react2.default.createElement(
-	          'figure',
+	          "figure",
 	          null,
-	          _react2.default.createElement('img', { className: 'product-image', src: this.props.data.img, alt: 'bong-image' })
+	          _react2.default.createElement("img", { className: "product-image", src: this.props.data.img, alt: "bong-image" })
 	        ),
 	        _react2.default.createElement(
-	          'p',
-	          { className: 'description' },
+	          "p",
+	          { className: "description" },
 	          this.props.data.desc
 	        )
 	      );
@@ -4288,7 +4267,7 @@
 	  }
 
 	  _createClass(ProductsCategory, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      // console.log(this.props.data.items)
 	      var renderItems = function renderItems(item) {
@@ -4296,8 +4275,8 @@
 	      };
 
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'products' },
+	        "div",
+	        { className: "products" },
 	        this.props.data.items.map(renderItems)
 	      );
 	    }

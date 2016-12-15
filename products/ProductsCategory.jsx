@@ -5,12 +5,12 @@ class Item extends Component{
   constructor (props){
     super(props)
     // console.log(props)
-    console.log('it\'s in Item')
+    // console.log('it\'s in Item')
     // this.state = {}
   }
 
   render(){
-    console.log(this.props.data)
+    // console.log(this.props.data)
     return (
       <div className="item">
         <div className="sku">{this.props.data.sku}</div>
