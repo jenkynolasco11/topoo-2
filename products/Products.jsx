@@ -16,7 +16,6 @@ class Products extends Component {
 
   render(){
     let renderCategories = (cat) => {
-      // console.log(cat)
       return <ByCategory data={cat} key={cat.cat} />
     }
 
@@ -27,34 +26,18 @@ class Products extends Component {
         }
       </div>
       )
-      // get('/items')
-      // .then( (response) => {
-      //   console.log(response.data)
-      //   // this.setState({
-      //   //
-      //   // })
-      // })
-    // console.log('here I am...')
   }
 
   componentDidMount(){
     get('/items')
-    .then( (response) => {
-      // console.log(response.data)
+    .then( (res) => {
       this.setState({
-        categories : response.data.pop()
+        categories : [].concat(res.data)
       })
-      // console.log('it\'s here')
-      // console.log(this.state)
     })
   }
 }
 
-// Renders component in DOM
-// render(
-//   createElement(Products),
-//   document.getElementById('products-container')
-// )
 ReactDOM.render(
   React.createElement(Products),
   document.getElementById('products-container')
