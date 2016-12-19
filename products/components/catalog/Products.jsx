@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
-// import { TabPanel } from 'react-tabs'
-// import axios from 'axios'
 
 class Item extends Component{
   constructor (props){
     super(props)
-    // console.log('it\'s in Item')
-    // this.state = {}
+  }
+
+  itemClicked(item){
+    this.props.itemSelected(item)
   }
 
   render(){
-    // console.log(this.props.data)
     return (
-      <div className="item">
+      <div className="item" onClick={this.itemClicked.bind(this,this.props.data)}>
         <div className="sku">{this.props.data.sku}</div>
         <div className="price">{this.props.data.price}</div>
         <figure>
@@ -24,17 +23,20 @@ class Item extends Component{
   }
 }
 
-export default class Products extends Component{
+class Products extends Component{
   constructor(props){
-    // console.log(props.data)
     super(props)
   }
 
   render(){
-    // console.log(this.props.data)
-    let renderItems = (item) => {
-      return <Item data={item} key={item.sku}/>
-    }
+    const renderItems = (item) => {
+      return (
+      <Item
+        data={item}
+        key={item.sku}
+        itemSelected={this.props.itemSelected}
+      />
+    )}
 
     return (
       <div className='products'>
@@ -45,3 +47,5 @@ export default class Products extends Component{
     )
   }
 }
+
+export default Products

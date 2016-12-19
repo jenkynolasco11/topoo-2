@@ -12,7 +12,6 @@ const categories = [
 class Request{
   constructor(API){
     this.APIKEY = API
-    // this.items = {}
   }
 
   filterIt(data){
@@ -26,18 +25,17 @@ class Request{
       })
     }
     return items
-
   }
 
   requestItemsByCategory(category){
-    let products = { 
+    let products = {
       category,
       cat_name : '',
       items : []
     }
-    
+
     function requestIt(cat, offset, resolve, self){
-       
+
       self.makeRequest(`https://${self.APIKEY}:X@app.handshake.com/api/v3/items?category=${cat}&offset=${offset}`)
         .then((data)=>{
           data = JSON.parse(data)
@@ -46,7 +44,7 @@ class Request{
 
           // Get me one category name for record
           if(!products['cat_name']) products['cat_name'] = data.objects[0].category.name
-          
+
           products.items = products.items.concat(self.filterIt(data.objects))
 
           if(offset + 100 < total_count){
