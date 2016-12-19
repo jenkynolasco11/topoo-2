@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import Products from './Products.jsx'
-// import { render } from 'react-dom'
-import ReactDOM from 'react-dom'
+
+import { render } from 'react-dom'
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs'
-// import { createElement } from 'react'
-// import React from 'react'
 import { get } from 'axios'
 
 class ProductsCategory extends Component {
@@ -61,7 +59,7 @@ class ProductsCategory extends Component {
 
 // console.log('file is mounted')
 
-ReactDOM.render(
-  React.createElement(ProductsCategory),
+render(
+  <ProductsCategory/>,
   document.getElementById('products-container')
 )
