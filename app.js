@@ -1,67 +1,58 @@
-// import express from 'express'
-// import { config } from 'dotenv'
-// config()
 import dotenv from 'dotenv'
 
 dotenv.config()
 
-import express from 'express'
-import request from 'request'
-
-import products from './products/index'
-import reqProd from './requestProducts'
-
-// TODO: Fix this later
 const APIKEY = process.env.APIKEY
-const PORT = process.env.PORT || 8080
+
+if(!APIKEY) throw new Error('No API key provided')
+
+import express from 'express'
+// import request from 'request'
+
+// import products from './products/index'
+import rProducts from './requestProducts'
+
+const products = new rProducts(APIKEY)
+
+let allItems = []
+
+let promises = products.requestAllItems()
+
+Promise.all(promises).then((products)=>{
+  allItems = [].concat(products)
+  // products.forEach((data) => {
+  //   allItems = Object.assign({}, allItems, data)
+  // })
+  if(allItems.length) console.log('all products fetched')
+  else console.log('something happened on fetching the products')
+})
 
 const app = express()
 
-const categories = [
-  6524,
-  3434
-]
-const allProducts = []
-// TODO: make a promise to return the values
-Promise.all(categories.map((cat)=> reqProd(APIKEY,cat))).then( (data) => {
-  // all loaded
-  allProducts.push(data)
-  console.log('All products fetched')
-}, (data) => {
-  // error
-})
 // console.log(prodCat)
 app.set('view engine', 'html')
-app.set('views', './static')
+app.set('views', './views')
+
 app.use('/static', express.static('./static'))
 app.use('/', express.static('./static'))
 
-// app.use('/', products)
-
 /* Routes */
 app.get('/', (req,res) => {
-  console.log(allProducts)
-  // console.log('here')
   res.render('/static/index')
 })
 
-app.get('/items', (req,res) =>{
-  res.send(allProducts)
-})
-// app.get('/', (req, res) => {
-//   request
-//     .get(`https://${apikey}:X@app.handshake.com/api/v3/items?category=6524&limit=2`)
-//     .on('response', (response) =>{
-//       var items = ''
-//       response.on('data', (data) => {
-//         items += data.toString('utf-8')
-//       })
-//       response.on('end', ()=>{
-//         res.send(items)
-//       })
-//     })
+// app.get('/items/:cat/:offset', (req,res)=>{
+
 // })
 
+app.get('/items', (req,res) =>{
+  console.log('requesting items...')
+  // console.log(allItems.length)
+  res.end(JSON.stringify(allItems))
+})
+
+const PORT = process.env.PORT || 8080
+
 app.listen(PORT, () => {
-  console.log('running server on port 8000')
+  console.log(`Running on port ${PORT}...`)
 })

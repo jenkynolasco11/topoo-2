@@ -1,46 +1,67 @@
 import React, { Component } from 'react'
-// import axios from 'axios'
+import Products from './Products.jsx'
+// import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs'
+// import { createElement } from 'react'
+// import React from 'react'
+import { get } from 'axios'
 
-class Item extends Component{
-  constructor (props){
-    super(props)
-    // console.log(props)
-    console.log('it\'s in Item')
-    // this.state = {}
-  }
-
-  render(){
-    console.log(this.props.data)
-    return (
-      <div className="item">
-        <div className="sku">{this.props.data.sku}</div>
-        <div className="price">{this.props.data.price}</div>
-        <figure>
-          <img className="product-image" src={this.props.data.img} alt="bong-image"/>
-        </figure>
-        <p className="description">{this.props.data.desc}</p>
-      </div>
-    )
-  }
-}
-
-export default class ProductsCategory extends Component{
+class ProductsCategory extends Component {
   constructor(props){
+    // console.log('this is being mounted')
     super(props)
+    this.state = {
+      categories : []
+    }
   }
 
+  handleSelection(index,last){
+    // console.log(index,last);
+  }
+// <tab> asdasd <div> </tab>
+
   render(){
-    // console.log(this.props.data.items)
-    let renderItems = (item) => {
-      return <Item data={item} key={item.sku}/>
+    let renderProducts = (cat) => {
+      // console.log(cat)
+      return (
+        <TabPanel>
+          <Products data={cat.items} key={cat.cat_name} />
+        </TabPanel>
+        )
+    }
+
+    let renderTabs = (cat) => {
+      return <Tab key={cat.category}> {cat.cat_name} </Tab>
     }
 
     return (
-      <div className='products'>
+      <Tabs onSelect={this.handleSelection}>
+        <TabList>
         {
-          this.props.data.items.map(renderItems)
+          this.state.categories.map(renderTabs)
         }
-      </div>
-    )
+        </TabList>
+        {
+          this.state.categories.map(renderProducts)
+        }
+      </Tabs>
+      )
+  }
+
+  componentDidMount(){
+    get('/items')
+    .then( (res) => {
+      this.setState({
+        categories : [].concat(res.data)
+      })
+    })
   }
 }
+
+// console.log('file is mounted')
+
+ReactDOM.render(
+  React.createElement(ProductsCategory),
+  document.getElementById('products-container')
+)
