@@ -13,7 +13,8 @@ import reqProd from './requestProducts'
 
 // TODO: Fix this later
 const APIKEY = process.env.APIKEY
-// console.log(APIKEY)
+const PORT = process.env.PORT || 8080
+
 const app = express()
 
 const categories = [
@@ -61,6 +62,6 @@ app.get('/items', (req,res) =>{
 //     })
 // })
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
   console.log('running server on port 8000')
 })
