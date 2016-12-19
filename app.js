@@ -30,7 +30,7 @@ Promise.all(promises).then((products)=>{
 const app = express()
 
 // console.log(prodCat)
-app.set('view engine', 'html')
+app.set('view engine', 'pug')
 app.set('views', './views')
 
 app.use('/static', express.static('./static'))
