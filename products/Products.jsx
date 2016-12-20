@@ -10,13 +10,23 @@ class Item extends Component{
   }
 
   render(){
-    // console.log(this.props.data)
+    const addItemToCart = (item) => {
+      this.props.addItem(item)
+      this.props.selectIt(item.sku, true)
+    }
     return (
-      <div className="item">
+      <div
+        className={this.props.data.selected ? "selected-to-checkout item" : "item"}
+        onClick={addItemToCart.bind(this,this.props.data)}
+        >
         <div className="sku">{this.props.data.sku}</div>
         <div className="price">{this.props.data.price}</div>
         <figure>
-          <img className="product-image" src={this.props.data.img} alt="bong-image"/>
+          <img
+            className="product-image"
+            src={this.props.data.img}
+            alt="bong-image"
+          />
         </figure>
         <p className="description">{this.props.data.desc}</p>
       </div>
@@ -24,7 +34,7 @@ class Item extends Component{
   }
 }
 
-export default class Products extends Component{
+class Products extends Component{
   constructor(props){
     // console.log(props.data)
     super(props)
@@ -33,7 +43,12 @@ export default class Products extends Component{
   render(){
     // console.log(this.props.data)
     let renderItems = (item) => {
-      return <Item data={item} key={item.sku}/>
+      return <Item
+        selectIt={this.props.selectIt}
+        addItem={this.props.addItem}
+        data={item}
+        key={item.sku}
+      />
     }
 
     return (
@@ -45,3 +60,5 @@ export default class Products extends Component{
     )
   }
 }
+
+export default Products

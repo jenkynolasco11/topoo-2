@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
+import { items } from './reducer-items'
+import { toggleCheckout as checkout, itemsInCart } from './reducer-items-checkout'
 
-const allReducers = () => {
-  return combineReducers({
-
-  })
-}
+const allReducers = combineReducers({
+    items,
+    checkout,
+    itemsInCart
+})
 
 export default allReducers

@@ -110,6 +110,10 @@ body main .catalog .products-container .products .item {
   height: 250px;
   width: 200px;
 }
+body main .catalog .products-container .products .item.selected-to-checkout {
+  background: #888;
+}
+
 body main .catalog .products-container .products .item:hover {
   box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.6);
 }
@@ -145,4 +149,27 @@ body main .catalog .products-container .products .item .description {
   font-size: 8pt;
   text-align: left;
   margin: 5px;
+}
+
+body main .catalog .products-container .checkout .products-checkout {
+  background : blue;
+  display : flex;
+}
+body main .catalog .products-container .checkout .products-checkout * {
+  align-self : center;
+}
+body main .catalog .products-container .checkout .products-checkout .sku{
+  background : yellow;
+}
+
+body main .catalog .products-container .checkout .products-checkout .price{
+  background : gray;
+}
+
+body main .catalog .products-container .checkout .products-checkout figure{
+  background : red;
+}
+
+body main .catalog .products-container .checkout .products-checkout .description{
+  background : cyan;
 }

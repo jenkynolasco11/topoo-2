@@ -1,58 +1,91 @@
 import React, { Component } from 'react'
-import Products from './Products.jsx'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-import { render } from 'react-dom'
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs'
 import { get } from 'axios'
 
+import { addItems, toggleCheckout, addItemToCheckout, selectItem } from './actions'
+import Products from './Products.jsx'
+import Checkout from './CheckoutCatalog.jsx'
+
 class ProductsCatalog extends Component {
-  // constructor(props){
-  //   // console.log('this is being mounted')
-  //   super(props)
-  //   this.state = {
-  //     categories : []
-  //   }
+
+  // handleSelection(index,last){
+    //
   // }
 
-  handleSelection(index,last){
-    // console.log(index,last);
-  }
   render(){
-    let renderProducts = (cat) => {
-      // console.log(cat)
+    if(this.props.checkout){
+      return <Checkout />
+    }
+
+    else {
+      const toggleCheckout = () => {
+        this.props.toggleCheckout(true)
+      }
+
+      const renderProducts = (cat) => {
+        return (
+          <TabPanel key={cat.cat_name}>
+            <Products
+              selectIt={this.props.selectItem}
+              addItem={this.props.addItemToCheckout}
+              data={cat.items}
+            />
+          </TabPanel>
+          )
+      }
+
+      const renderTabs = (cat) => {
+        return <Tab key={cat.category}> {cat.cat_name} </Tab>
+      }
+
       return (
-        <TabPanel>
-          <Products data={cat.items} key={cat.cat_name} />
-        </TabPanel>
+        <div>
+          <button onClick={toggleCheckout.bind(this)}>
+            Go To Checkout
+          </button>
+          {/* <Tabs onSelect={this.handleSelection}> */}
+          <Tabs>
+            <TabList>
+            {
+              this.props.items.map(renderTabs)
+            }
+            </TabList>
+            {
+              this.props.items.map(renderProducts)
+            }
+          </Tabs>
+        </div>
         )
-    }
-
-    let renderTabs = (cat) => {
-      return <Tab key={cat.category}> {cat.cat_name} </Tab>
-    }
-
-    return (
-      <Tabs onSelect={this.handleSelection}>
-        <TabList>
-        {
-          this.state.categories.map(renderTabs)
-        }
-        </TabList>
-        {
-          this.state.categories.map(renderProducts)
-        }
-      </Tabs>
-      )
+      }
   }
 
-  componentDidMount(){
+  componentWillMount(){
     get('/items')
     .then( (res) => {
-      this.setState({
-        categories : [].concat(res.data)
-      })
+      this.props.addItems(res.data)
     })
   }
 }
 
-export default ProductsCatalog
+const mapStateToProps = (state) => {
+  return {
+    items    : state.items,
+    checkout : state.checkout
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    
+    addItems,
+    toggleCheckout,
+    addItemToCheckout,
+    selectItem
+
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsCatalog)
