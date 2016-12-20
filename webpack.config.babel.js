@@ -13,7 +13,7 @@ export default {
 // module.exports = {
   // devtool : 'inline-source-map',
   entry : [
-    './products/ProductsCategory.jsx'
+    './products/ProductsCatalog.jsx'
   ],
   output : {
     path : path.join(__dirname,'static'),

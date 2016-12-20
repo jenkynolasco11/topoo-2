@@ -5,20 +5,18 @@ import { render } from 'react-dom'
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs'
 import { get } from 'axios'
 
-class ProductsCategory extends Component {
-  constructor(props){
-    // console.log('this is being mounted')
-    super(props)
-    this.state = {
-      categories : []
-    }
-  }
+class ProductsCatalog extends Component {
+  // constructor(props){
+  //   // console.log('this is being mounted')
+  //   super(props)
+  //   this.state = {
+  //     categories : []
+  //   }
+  // }
 
   handleSelection(index,last){
     // console.log(index,last);
   }
-// <tab> asdasd <div> </tab>
-
   render(){
     let renderProducts = (cat) => {
       // console.log(cat)
@@ -57,9 +55,4 @@ class ProductsCategory extends Component {
   }
 }
 
-// console.log('file is mounted')
-
-render(
-  <ProductsCategory/>,
-  document.getElementById('products-container')
-)
+export default ProductsCatalog
